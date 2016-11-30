@@ -5,6 +5,10 @@
 #define uchar unsigned char
 
 uchar* big_add(uchar *big_a,uchar *big_b);
+uchar* big_min(uchar *big_a, uchar *big_b);
+uchar* big_mul(uchar *big_a, uchar *big_b);
+uchar* big_div(uchar *big_a, uchar *big_b);
+uchar* big_mod(uchar *big_a, uchar *big_b);
 
 int main(int argc, char * argv[])
 {
@@ -39,7 +43,7 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-uchar* big_add(uchar *big_a,uchar *big_b)
+uchar* big_add(uchar *big_a, uchar *big_b)
 {
 	int i;
 	uchar upper=0;
@@ -61,3 +65,41 @@ uchar* big_add(uchar *big_a,uchar *big_b)
 	}
 	return big_a;
 }
+
+uchar* big_min(uchar *big_a, uchar *big_b)
+{
+	int i;
+	uchar lower=0;
+	for(i=127;i>=0;i--)
+	{
+		if(big_a[i]<big_b[i])
+		{
+			lower=255;
+			big_a[i-1]-=1;
+		}
+		else
+		{
+			lower=0;
+		}
+		big_a[i]= (big_a[i]+lower) - big_b[i];
+	}
+	return big_a;
+}
+
+uchar* big_mul(uchar *big_a, uchar *big_b)
+{
+
+	return big_a;
+}
+
+uchar* big_div(uchar *big_a, uchar *big_b)
+{
+	return big_a;
+}
+
+uchar* big_mod(uchar *big_a, uchar *big_b)
+{
+	return big_a;
+}
+
+
