@@ -88,8 +88,9 @@ uchar* big_min(uchar *big_a, uchar *big_b)
 
 uchar* big_mul(uchar *big_a, uchar *big_b)
 {
+	uchar *result;
 
-	return big_a;
+	return ;
 }
 
 uchar* big_div(uchar *big_a, uchar *big_b)
