@@ -218,12 +218,15 @@ BIG_DECIMAL big_mul(BIG_DECIMAL *A, BIG_DECIMAL *B)
 
 			result.digit[i+j]=sum_digit%0x0A;
 		}
-		/* 
+		if(tmp)
+		{
+			result.digit[i+j]+=tmp;
+		}
 		//show calculate flow
 		printf("%d : ",i);
 		printf_BIG_DECIMAL_struct(result);
 		printf("\n");
-		*/
+		
 	}
 
 	i=result.size;
