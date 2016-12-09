@@ -44,6 +44,18 @@ int main(int argc, char * argv[])
 	printf("A*B result : ");
 	printf_BIG_DECIMAL_struct(result3);	
 	printf("\n");
+
+	BIG_DECIMAL result4=big_div(&decimal1,&decimal2);
+
+	printf("A/B result : ");
+	printf_BIG_DECIMAL_struct(result4);	
+	printf("\n");
+
+	BIG_DECIMAL result5=big_mod(&decimal1,&decimal2);
+
+	printf("A%%B result : ");
+	printf_BIG_DECIMAL_struct(result5);	
+	printf("\n");
 	return 0;
 }
 

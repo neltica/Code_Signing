@@ -52,11 +52,12 @@ int cmp_BIG_DECIMAL(BIG_DECIMAL *A,BIG_DECIMAL *B)
 	{
 		for(i=A->size-1; i>=0; i--)
 		{
+			
 			if(A->digit[i] > B->digit[i])
 			{
 				return 1;
 			}
-			else
+			else if(A->digit[i] < B->digit[i])
 			{
 				return -1;
 			}
@@ -142,6 +143,7 @@ BIG_DECIMAL big_min(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	}
 	else
 	{
+		result.digit=(unsigned char*)malloc(1);
 		result.digit[0]=0;
 		result.size=1;
 		return result;
@@ -222,10 +224,12 @@ BIG_DECIMAL big_mul(BIG_DECIMAL *A, BIG_DECIMAL *B)
 		{
 			result.digit[i+j]+=tmp;
 		}
+		/*
 		//show calculate flow
 		printf("%d : ",i);
 		printf_BIG_DECIMAL_struct(result);
 		printf("\n");
+		*/
 		
 	}
 
@@ -240,10 +244,101 @@ BIG_DECIMAL big_mul(BIG_DECIMAL *A, BIG_DECIMAL *B)
 
 BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
+	int i,j;
+	int ret;
+	int value;
+	BIG_DECIMAL result;
+	BIG_DECIMAL A_copy, tmp_result;
 
+	result.digit=(unsigned char *)malloc(A->size-B->size+1);
+	result.size=A->size-B->size+1;
+
+	A_copy.digit=(unsigned char *)malloc(A->size);
+	A_copy.size=A->size;
+
+	for(i=0;i<A->size;i++)
+	{
+		A_copy.digit[i]=A->digit[i];
+	}
+	for(i=A->size-B->size; i>=0;i--)
+	{
+		tmp_result.digit=&A_copy.digit[i];
+		tmp_result.size=A_copy.size-i;
+		value=0;
+		while(1)
+		{
+			ret=cmp_BIG_DECIMAL(&tmp_result,B);
+			if(ret==0 || ret==1)
+			{
+				tmp_result=big_min(&tmp_result,B);
+				value++;
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		while(!tmp_result.digit[tmp_result.size-1] && tmp_result.size>0)
+		{
+			tmp_result.size-=1;
+		}
+		A_copy.size=i+tmp_result.size;
+		for(j=0;j<tmp_result.size;j++)
+		{
+			A_copy.digit[i+j]=tmp_result.digit[j];
+		}
+		result.digit[i]=value;
+
+	}
+	while(!result.digit[result.size-1] && result.size>1)
+	{
+		result.size--;
+	}
+
+	return result;
 }
 
 BIG_DECIMAL big_mod(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
+	int i,j;
+	int ret;
+	BIG_DECIMAL result, tmp_result;
+	result.digit=(unsigned char *)malloc(A->size);
+	result.size=A->size;
 
+	for(i=0;i<A->size;i++)
+	{
+		result.digit[i]=A->digit[i];
+	}
+	for(i=A->size-B->size; i>=0;i--)
+	{
+		tmp_result.digit=&result.digit[i];
+		tmp_result.size=result.size-i;
+		while(1)
+		{
+			ret=cmp_BIG_DECIMAL(&tmp_result,B);
+			if(ret==0 || ret==1)
+			{
+				tmp_result=big_min(&tmp_result,B);
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		while(!tmp_result.digit[tmp_result.size-1] && tmp_result.size>0)
+		{
+			tmp_result.size-=1;
+		}
+		result.size=i+tmp_result.size;
+		for(j=0;j<tmp_result.size;j++)
+		{
+			result.digit[i+j]=tmp_result.digit[j];
+		}
+
+	}
+
+	return result;
 }
