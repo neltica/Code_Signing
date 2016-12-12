@@ -1,0 +1,6 @@
+
+def do_deploy_setscene(d):
+    sstate_setscene(d)
+
+
+do_deploy_setscene(d)

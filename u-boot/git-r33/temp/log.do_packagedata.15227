@@ -1,0 +1,33 @@
+DEBUG: Executing python function sstate_task_prefunc
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/u-boot
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-doc
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-dbg.packaged
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-staticdev
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-locale
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-dev
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot.packaged
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-dbg
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-dev.packaged
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-images
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/u-boot-images.packaged
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot-doc
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot-staticdev
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot-locale
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot-dev
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot-dbg
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/u-boot-images
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime-reverse/
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/runtime/
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe/shlibs/
+DEBUG: Python function sstate_task_prefunc finished
+DEBUG: Executing shell function do_packagedata
+DEBUG: Shell function do_packagedata finished
+DEBUG: Executing python function sstate_task_postfunc
+DEBUG: Staging files from /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/pkgdata to /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/pkgdata/p2020rdb-fsl_networking-linux-gnuspe
+DEBUG: Preparing tree /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/pkgdata for packaging at /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-packagedata/pkgdata
+Removing hardcoded paths from sstate package: 'find /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-packagedata/ \( -name "*.la" -o -name "*-config" -o -name "*_config" \) -type f | xargs grep -l -e '/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb' | tee /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-packagedata/fixmepath | xargs --no-run-if-empty sed -i -e 's:/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb:FIXMESTAGINGDIRHOST:g''
+DEBUG: Executing shell function sstate_create_package
+DEBUG: Shell function sstate_create_package finished
+DEBUG: Python function sstate_task_postfunc finished

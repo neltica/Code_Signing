@@ -1,0 +1,83 @@
+
+def do_package(d):
+    # Change the following version to cause sstate to invalidate the package
+    # cache.  This is useful if an item this class depends on changes in a
+    # way that the output of this class changes.  rpmdeps is a good example
+    # as any change to rpmdeps requires this to be rerun.
+    # PACKAGE_BBCLASS_VERSION = "1"
+
+    # Init cachedpath
+    global cpath
+    cpath = oe.cachedpath.CachedPath()
+
+    ###########################################################################
+    # Sanity test the setup
+    ###########################################################################
+
+    packages = (d.getVar('PACKAGES', True) or "").split()
+    if len(packages) < 1:
+        bb.debug(1, "No packages to build, skipping do_package")
+        return
+
+    workdir = d.getVar('WORKDIR', True)
+    outdir = d.getVar('DEPLOY_DIR', True)
+    dest = d.getVar('D', True)
+    dvar = d.getVar('PKGD', True)
+    pn = d.getVar('PN', True)
+
+    if not workdir or not outdir or not dest or not dvar or not pn:
+        bb.error("WORKDIR, DEPLOY_DIR, D, PN and PKGD all must be defined, unable to package")
+        return
+
+    bb.build.exec_func("package_get_auto_pr", d)
+
+    ###########################################################################
+    # Optimisations
+    ###########################################################################
+
+    # Contunually rexpanding complex expressions is inefficient, particularly when
+    # we write to the datastore and invalidate the expansion cache. This code
+    # pre-expands some frequently used variables
+
+    def expandVar(x, d):
+        d.setVar(x, d.getVar(x, True))
+
+    for x in 'PN', 'PV', 'BPN', 'TARGET_SYS', 'EXTENDPRAUTO':
+        expandVar(x, d)
+
+    ###########################################################################
+    # Setup PKGD (from D)
+    ###########################################################################
+
+    for f in (d.getVar('PACKAGEBUILDPKGD', True) or '').split():
+        bb.build.exec_func(f, d)
+
+    ###########################################################################
+    # Split up PKGD into PKGDEST
+    ###########################################################################
+
+    cpath = oe.cachedpath.CachedPath()
+
+    for f in (d.getVar('PACKAGESPLITFUNCS', True) or '').split():
+        bb.build.exec_func(f, d)
+
+    ###########################################################################
+    # Process PKGDEST
+    ###########################################################################
+
+    # Build global list of files in each split package
+    global pkgfiles
+    pkgfiles = {}
+    packages = d.getVar('PACKAGES', True).split()
+    pkgdest = d.getVar('PKGDEST', True)
+    for pkg in packages:
+        pkgfiles[pkg] = []
+        for walkroot, dirs, files in cpath.walk(pkgdest + "/" + pkg):
+            for file in files:
+                pkgfiles[pkg].append(walkroot + os.sep + file)
+
+    for f in (d.getVar('PACKAGEFUNCS', True) or '').split():
+        bb.build.exec_func(f, d)
+
+
+do_package(d)

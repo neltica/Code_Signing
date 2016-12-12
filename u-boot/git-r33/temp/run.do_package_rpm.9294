@@ -1,0 +1,93 @@
+
+def do_package_rpm(d):
+    def creat_srpm_dir(d):
+        if d.getVar('SOURCE_ARCHIVE_PACKAGE_TYPE', True) == 'srpm':
+            clean_licenses = get_licenses(d)
+            pkgwritesrpmdir = bb.data.expand('/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/sources/deploy-srpm/${PACKAGE_ARCH_EXTEND}', d)
+            pkgwritesrpmdir = pkgwritesrpmdir + '/' + clean_licenses
+            bb.mkdirhier(pkgwritesrpmdir)
+            os.chmod(pkgwritesrpmdir, 0755)
+            return pkgwritesrpmdir
+
+    # We need a simple way to remove the MLPREFIX from the package name,
+    # and dependency information...
+    def strip_multilib(name, d):
+        ml = d.getVar("MLPREFIX", True)
+        if ml and name and len(ml) != 0 and name.find(ml) >= 0:
+            return "".join(name.split(ml))
+        return name
+
+    workdir = d.getVar('WORKDIR', True)
+    outdir = d.getVar('DEPLOY_DIR_IPK', True)
+    tmpdir = d.getVar('TMPDIR', True)
+    pkgd = d.getVar('PKGD', True)
+    pkgdest = d.getVar('PKGDEST', True)
+    if not workdir or not outdir or not pkgd or not tmpdir:
+        bb.error("Variables incorrectly set, unable to package")
+        return
+
+    packages = d.getVar('PACKAGES', True)
+    if not packages or packages == '':
+        bb.debug(1, "No packages; nothing to do")
+        return
+
+    # Construct the spec file...
+    srcname    = strip_multilib(d.getVar('PN', True), d)
+    outspecfile = workdir + "/" + srcname + ".spec"
+    d.setVar('OUTSPECFILE', outspecfile)
+    bb.build.exec_func('write_specfile', d)
+
+    perfiledeps = (d.getVar("MERGEPERFILEDEPS", True) or "0") == "0"
+    if perfiledeps:
+        outdepends, outprovides = write_rpm_perfiledata(srcname, d)
+
+    # Setup the rpmbuild arguments...
+    rpmbuild = d.getVar('RPMBUILD', True)
+    targetsys = d.getVar('TARGET_SYS', True)
+    targetvendor = d.getVar('TARGET_VENDOR', True)
+    package_arch = (d.getVar('PACKAGE_ARCH', True) or "").replace("-", "_")
+    if package_arch not in "all any noarch".split() and not package_arch.endswith("_nativesdk"):
+        ml_prefix = (d.getVar('MLPREFIX', True) or "").replace("-", "_")
+        d.setVar('PACKAGE_ARCH_EXTEND', ml_prefix + package_arch)
+    else:
+        d.setVar('PACKAGE_ARCH_EXTEND', package_arch)
+    pkgwritedir = d.expand('/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms/${PACKAGE_ARCH_EXTEND}')
+    pkgarch = d.expand('${PACKAGE_ARCH_EXTEND}-fsl_networking-linux-gnuspe')
+    magicfile = d.expand('/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/i686-linux/usr/share/misc/magic.mgc')
+    bb.mkdirhier(pkgwritedir)
+    os.chmod(pkgwritedir, 0755)
+
+    cmd = rpmbuild
+    cmd = cmd + " --nodeps --short-circuit --target " + pkgarch + " --buildroot " + pkgd
+    cmd = cmd + " --define '_topdir " + workdir + "' --define '_rpmdir " + pkgwritedir + "'"
+    cmd = cmd + " --define '_build_name_fmt %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm'"
+    cmd = cmd + " --define '_use_internal_dependency_generator 0'"
+    if perfiledeps:
+        cmd = cmd + " --define '__find_requires " + outdepends + "'"
+        cmd = cmd + " --define '__find_provides " + outprovides + "'"
+    else:
+        cmd = cmd + " --define '__find_requires %{nil}'"
+        cmd = cmd + " --define '__find_provides %{nil}'"
+    cmd = cmd + " --define '_unpackaged_files_terminate_build 0'"
+    cmd = cmd + " --define 'debug_package %{nil}'"
+    cmd = cmd + " --define '_rpmfc_magic_path " + magicfile + "'"
+    cmd = cmd + " --define '_tmppath " + workdir + "'"
+    if d.getVar('SOURCE_ARCHIVE_PACKAGE_TYPE', True) == 'srpm':
+        cmd = cmd + " --define '_sourcedir " + workdir + "'"
+        cmdsrpm = cmd + " --define '_srcrpmdir " + creat_srpm_dir(d) + "'"
+        cmdsrpm = cmdsrpm + " -bs " + outspecfile
+        # Build the .src.rpm
+        d.setVar('SBUILDSPEC', cmdsrpm + "\n")
+        d.setVarFlag('SBUILDSPEC', 'func', '1')
+        bb.build.exec_func('SBUILDSPEC', d)
+        # Remove the source (SOURCE0, SOURCE1 ...)
+        cmd = cmd + " --rmsource "
+    cmd = cmd + " -bb " + outspecfile
+
+    # Build the rpm package!
+    d.setVar('BUILDSPEC', cmd + "\n")
+    d.setVarFlag('BUILDSPEC', 'func', '1')
+    bb.build.exec_func('BUILDSPEC', d)
+
+
+do_package_rpm(d)

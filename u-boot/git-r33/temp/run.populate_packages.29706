@@ -1,0 +1,120 @@
+
+def populate_packages(d):
+    import glob, re, subprocess
+
+    workdir = d.getVar('WORKDIR', True)
+    outdir = d.getVar('DEPLOY_DIR', True)
+    dvar = d.getVar('PKGD', True)
+    packages = d.getVar('PACKAGES', True)
+    pn = d.getVar('PN', True)
+
+    bb.utils.mkdirhier(outdir)
+    os.chdir(dvar)
+
+    # Sanity check PACKAGES for duplicates and for LICENSE_EXCLUSION
+    # Sanity should be moved to sanity.bbclass once we have the infrastucture
+    package_list = []
+
+    for pkg in packages.split():
+        if d.getVar('LICENSE_EXCLUSION-' + pkg, True):
+            bb.warn("%s has an incompatible license. Excluding from packaging." % pkg)
+        elif pkg in package_list:
+            bb.error("%s is listed in PACKAGES multiple times, this leads to packaging errors." % pkg)
+        else:
+            package_list.append(pkg)
+    d.setVar('PACKAGES', ' '.join(package_list))
+    pkgdest = d.getVar('PKGDEST', True)
+
+    seen = []
+
+    for pkg in package_list:
+        root = os.path.join(pkgdest, pkg)
+        bb.utils.mkdirhier(root)
+
+        filesvar = d.getVar('FILES_%s' % pkg, True) or ""
+        if "//" in filesvar:
+            bb.warn("FILES variable for package %s contains '//' which is invalid. Attempting to fix this but you should correct the metadata.\n" % pkg)
+            filesvar.replace("//", "/")
+        files = filesvar.split()
+        for file in files:
+            if os.path.isabs(file):
+                file = '.' + file
+            if not file.startswith("./"):
+                file = './' + file
+            if not cpath.islink(file):
+                if cpath.isdir(file):
+                    newfiles =  [ os.path.join(file,x) for x in os.listdir(file) ]
+                    if newfiles:
+                        files += newfiles
+                        continue
+            globbed = glob.glob(file)
+            if globbed:
+                if [ file ] != globbed:
+                    files += globbed
+                    continue
+            if (not cpath.islink(file)) and (not cpath.exists(file)):
+                continue
+            if file in seen:
+                continue
+            seen.append(file)
+
+            def mkdir(src, dest, p):
+                src = os.path.join(src, p)
+                dest = os.path.join(dest, p)
+                fstat = cpath.stat(src)
+                os.mkdir(dest, fstat.st_mode)
+                os.chown(dest, fstat.st_uid, fstat.st_gid)
+                if p not in seen:
+                    seen.append(p)
+                cpath.updatecache(dest)
+
+            def mkdir_recurse(src, dest, paths):
+                if cpath.exists(dest + '/' + paths):
+                    return
+                while paths.startswith("./"):
+                    paths = paths[2:]
+                p = "."
+                for c in paths.split("/"):
+                    p = os.path.join(p, c)
+                    if not cpath.exists(os.path.join(dest, p)):
+                        mkdir(src, dest, p)
+
+            if cpath.isdir(file) and not cpath.islink(file):
+                mkdir_recurse(dvar, root, file)
+                continue
+
+            mkdir_recurse(dvar, root, os.path.dirname(file))
+            fpath = os.path.join(root,file)
+            if not cpath.islink(file):
+                os.link(file, fpath)
+                fstat = cpath.stat(file)
+                os.chmod(fpath, fstat.st_mode)
+                os.chown(fpath, fstat.st_uid, fstat.st_gid)
+                continue
+            ret = bb.utils.copyfile(file, fpath)
+            if ret is False or ret == 0:
+                raise bb.build.FuncFailed("File population failed")
+
+    os.chdir(workdir)
+
+    unshipped = []
+    for root, dirs, files in cpath.walk(dvar):
+        dir = root[len(dvar):]
+        if not dir:
+            dir = os.sep
+        for f in (files + dirs):
+            path = os.path.join(dir, f)
+            if ('.' + path) not in seen:
+                unshipped.append(path)
+
+    if unshipped != []:
+        msg = pn + ": Files/directories were installed but not shipped"
+        if "installed_vs_shipped" in (d.getVar('INSANE_SKIP_' + pn, True) or "").split():
+            bb.note("Package %s skipping QA tests: installed_vs_shipped" % pn)
+        else:
+            for f in unshipped:
+                msg = msg + "\n  " + f
+            package_qa_handle_error("installed_vs_shipped", msg, d)
+
+
+populate_packages(d)

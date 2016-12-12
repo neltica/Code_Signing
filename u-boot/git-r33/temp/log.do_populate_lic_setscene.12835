@@ -1,0 +1,9 @@
+DEBUG: Executing python function do_populate_lic_setscene
+DEBUG: Executing shell function sstate_unpack_package
+license-destdir/
+license-destdir/u-boot/
+license-destdir/u-boot/COPYING
+license-destdir/u-boot/generic_GPLv2
+DEBUG: Shell function sstate_unpack_package finished
+DEBUG: Staging files from /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/license-destdir to /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/licenses
+DEBUG: Python function do_populate_lic_setscene finished

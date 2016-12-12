@@ -1,0 +1,42 @@
+DEBUG: Executing python function sstate_task_prefunc
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/rpm/p2020rdb/u-boot-images-git-r33.p2020rdb.rpm
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/rpm/p2020rdb/u-boot-dev-git-r33.p2020rdb.rpm
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/rpm/p2020rdb/u-boot-dbg-git-r33.p2020rdb.rpm
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/rpm/p2020rdb/u-boot-git-r33.p2020rdb.rpm
+DEBUG: Removing manifest: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/rpm/p2020rdb/
+DEBUG: Python function sstate_task_prefunc finished
+DEBUG: Executing python function do_package_write_rpm
+DEBUG: Executing python function read_subpackage_metadata
+DEBUG: Python function read_subpackage_metadata finished
+DEBUG: Executing python function do_package_rpm
+DEBUG: Executing python function write_specfile
+NOTE: Creating EMPTY RPM Package for u-boot-dbg
+NOTE: Not creating empty RPM package for u-boot-staticdev
+NOTE: Creating EMPTY RPM Package for u-boot-dev
+NOTE: Not creating empty RPM package for u-boot-doc
+NOTE: Not creating empty RPM package for u-boot-locale
+NOTE: Creating RPM package for u-boot
+NOTE: Creating EMPTY RPM Package for u-boot
+NOTE: Creating RPM package for u-boot-images
+DEBUG: Python function write_specfile finished
+DEBUG: Executing shell function BUILDSPEC
+Building target platforms: p2020rdb-fsl_networking-linux-gnuspe
+Processing files: u-boot-git-r33.p2020rdb
+Processing files: u-boot-dbg-git-r33.p2020rdb
+Processing files: u-boot-dev-git-r33.p2020rdb
+Processing files: u-boot-images-git-r33.p2020rdb
+Checking for unpackaged file(s): /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/i686-linux/usr/bin/../lib/rpm/check-files /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/package
+Wrote: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms/p2020rdb/u-boot-git-r33.p2020rdb.rpm
+Wrote: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms/p2020rdb/u-boot-dbg-git-r33.p2020rdb.rpm
+Wrote: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms/p2020rdb/u-boot-dev-git-r33.p2020rdb.rpm
+Wrote: /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms/p2020rdb/u-boot-images-git-r33.p2020rdb.rpm
+DEBUG: Shell function BUILDSPEC finished
+DEBUG: Python function do_package_rpm finished
+DEBUG: Python function do_package_write_rpm finished
+DEBUG: Executing python function sstate_task_postfunc
+DEBUG: Staging files from /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms to /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/deploy/rpm
+DEBUG: Preparing tree /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/deploy-rpms for packaging at /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-deploy-rpm/deploy-rpms
+Removing hardcoded paths from sstate package: 'find /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-deploy-rpm/ \( -name "*.la" -o -name "*-config" -o -name "*_config" \) -type f | xargs grep -l -e '/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb' | tee /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-deploy-rpm/fixmepath | xargs --no-run-if-empty sed -i -e 's:/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb:FIXMESTAGINGDIRHOST:g''
+DEBUG: Executing shell function sstate_create_package
+DEBUG: Shell function sstate_create_package finished
+DEBUG: Python function sstate_task_postfunc finished

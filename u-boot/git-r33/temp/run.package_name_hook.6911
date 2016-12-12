@@ -1,0 +1,6 @@
+
+def package_name_hook(d):
+    bb.build.exec_func('debian_package_name_hook', d)
+
+
+package_name_hook(d)

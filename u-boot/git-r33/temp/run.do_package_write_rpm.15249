@@ -1,0 +1,7 @@
+
+def do_package_write_rpm(d):
+    bb.build.exec_func("read_subpackage_metadata", d)
+    bb.build.exec_func("do_package_rpm", d)
+
+
+do_package_write_rpm(d)

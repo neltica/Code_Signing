@@ -1,0 +1,15 @@
+PN: u-boot
+PV: git
+PR: r33
+PKGV: git
+PKGR: r33
+LICENSE: GPLv2
+DESCRIPTION_u-boot-dbg: U-boot bootloader  This package contains ELF symbols and related sources for debugging purposes.
+SUMMARY_u-boot-dbg: u-boot version git-r33 - Debugging files
+RRECOMMENDS_u-boot-dbg: u-boot (= git-r33)
+SECTION_u-boot-dbg: devel
+PKG_u-boot-dbg: u-boot-dbg
+ALLOW_EMPTY_u-boot-dbg: 1
+FILES_u-boot-dbg: /usr/bin/.debug /usr/sbin/.debug /usr/lib/u-boot/.debug /usr/lib/.debug /bin/.debug /sbin/.debug /lib/.debug /usr/lib/u-boot/.debug /usr/lib/matchbox-panel/.debug /usr/src/debug
+FILES_INFO: {}
+PKGSIZE_u-boot-dbg: 0

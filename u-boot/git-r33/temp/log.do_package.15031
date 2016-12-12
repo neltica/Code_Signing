@@ -1,0 +1,72 @@
+DEBUG: Executing python function sstate_task_prefunc
+DEBUG: Python function sstate_task_prefunc finished
+DEBUG: Executing python function do_package
+DEBUG: Executing python function package_get_auto_pr
+DEBUG: Python function package_get_auto_pr finished
+DEBUG: Executing python function perform_packagecopy
+DEBUG: Python function perform_packagecopy finished
+DEBUG: Executing python function split_and_strip_files
+DEBUG: Python function split_and_strip_files finished
+DEBUG: Executing python function fixup_perms
+DEBUG: Python function fixup_perms finished
+DEBUG: Executing python function package_do_split_locales
+DEBUG: No locale files in this package
+DEBUG: Python function package_do_split_locales finished
+DEBUG: Executing python function populate_packages
+DEBUG: Python function populate_packages finished
+DEBUG: Executing python function package_fixsymlinks
+DEBUG: Python function package_fixsymlinks finished
+DEBUG: Executing python function package_name_hook
+DEBUG: Executing python function debian_package_name_hook
+DEBUG: LIBNAMES: pkg u-boot-staticdev libs 0 bins 0 sonames []
+DEBUG: LIBNAMES: pkg u-boot-locale libs 0 bins 0 sonames []
+DEBUG: LIBNAMES: pkg u-boot-images libs 0 bins 0 sonames []
+DEBUG: LIBNAMES: pkg u-boot-doc libs 0 bins 0 sonames []
+DEBUG: LIBNAMES: pkg u-boot-dev libs 0 bins 0 sonames []
+DEBUG: LIBNAMES: pkg u-boot-dbg libs 0 bins 0 sonames []
+DEBUG: LIBNAMES: pkg u-boot libs 0 bins 0 sonames []
+DEBUG: Python function debian_package_name_hook finished
+DEBUG: Python function package_name_hook finished
+DEBUG: Executing python function package_do_filedeps
+DEBUG: Python function package_do_filedeps finished
+DEBUG: Executing python function package_do_shlibs
+DEBUG: calculating shlib provides for u-boot-dbg
+DEBUG: calculating shlib provides for u-boot-staticdev
+DEBUG: calculating shlib provides for u-boot-dev
+DEBUG: calculating shlib provides for u-boot-doc
+DEBUG: calculating shlib provides for u-boot-locale
+DEBUG: calculating shlib provides for u-boot
+DEBUG: calculating shlib provides for u-boot-images
+DEBUG: calculating shlib requirements for u-boot-dbg
+DEBUG: calculating shlib requirements for u-boot-staticdev
+DEBUG: calculating shlib requirements for u-boot-dev
+DEBUG: calculating shlib requirements for u-boot-doc
+DEBUG: calculating shlib requirements for u-boot-locale
+DEBUG: calculating shlib requirements for u-boot
+DEBUG: calculating shlib requirements for u-boot-images
+DEBUG: Python function package_do_shlibs finished
+DEBUG: Executing python function package_do_pkgconfig
+DEBUG: Python function package_do_pkgconfig finished
+DEBUG: Executing python function read_shlibdeps
+DEBUG: Python function read_shlibdeps finished
+DEBUG: Executing python function package_depchains
+DEBUG: Python function package_depchains finished
+DEBUG: Executing python function emit_pkgdata
+DEBUG: Python function emit_pkgdata finished
+DEBUG: Executing python function do_package_qa
+NOTE: DO PACKAGE QA
+NOTE: Checking Package: u-boot-dbg
+NOTE: Checking Package: u-boot-staticdev
+NOTE: Checking Package: u-boot-dev
+NOTE: Checking Package: u-boot-doc
+NOTE: Checking Package: u-boot-locale
+NOTE: Checking Package: u-boot
+NOTE: Checking Package: u-boot-images
+NOTE: DONE with PACKAGE QA
+DEBUG: Python function do_package_qa finished
+DEBUG: Python function do_package finished
+DEBUG: Executing python function sstate_task_postfunc
+Removing hardcoded paths from sstate package: 'find /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-package/ \( -name "*.la" -o -name "*-config" -o -name "*_config" \) -type f | xargs grep -l -e '/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb' | tee /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sstate-build-package/fixmepath | xargs --no-run-if-empty sed -i -e 's:/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb:FIXMESTAGINGDIRHOST:g''
+DEBUG: Executing shell function sstate_create_package
+DEBUG: Shell function sstate_create_package finished
+DEBUG: Python function sstate_task_postfunc finished

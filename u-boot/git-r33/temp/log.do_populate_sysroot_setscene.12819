@@ -1,0 +1,6 @@
+DEBUG: Executing python function do_populate_sysroot_setscene
+DEBUG: Executing shell function sstate_unpack_package
+sysroot-destdir/
+DEBUG: Shell function sstate_unpack_package finished
+DEBUG: Staging files from /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sysroot-destdir to /home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb
+DEBUG: Python function do_populate_sysroot_setscene finished

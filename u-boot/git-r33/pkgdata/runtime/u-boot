@@ -1,0 +1,14 @@
+PN: u-boot
+PV: git
+PR: r33
+PKGV: git
+PKGR: r33
+LICENSE: GPLv2
+DESCRIPTION: U-boot bootloader
+SUMMARY: u-boot version git-r33
+SECTION: bootloaders
+PKG_u-boot: u-boot
+ALLOW_EMPTY_u-boot: 1
+FILES_u-boot: /usr/bin/* /usr/sbin/* /usr/lib/u-boot/* /usr/lib/lib*.so.* /etc /com /var /bin/* /sbin/* /lib/*.so.* /lib/udev/rules.d /usr/lib/udev/rules.d /usr/share/u-boot /usr/lib/u-boot/* /usr/share/pixmaps /usr/share/applications /usr/share/idl /usr/share/omf /usr/share/sounds /usr/lib/bonobo/servers
+FILES_INFO: {}
+PKGSIZE_u-boot: 0

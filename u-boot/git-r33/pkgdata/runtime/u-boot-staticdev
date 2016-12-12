@@ -1,0 +1,14 @@
+PN: u-boot
+PV: git
+PR: r33
+PKGV: git
+PKGR: r33
+LICENSE: GPLv2
+DESCRIPTION_u-boot-staticdev: U-boot bootloader  This package contains static libraries for software development.
+SUMMARY_u-boot-staticdev: u-boot version git-r33 - Development files (Static Libraries)
+RDEPENDS_u-boot-staticdev: u-boot-dev (= git-r33)
+SECTION_u-boot-staticdev: devel
+PKG_u-boot-staticdev: u-boot-staticdev
+FILES_u-boot-staticdev: /usr/lib/*.a /lib/*.a /usr/lib/u-boot/*.a
+FILES_INFO: {}
+PKGSIZE_u-boot-staticdev: 0
