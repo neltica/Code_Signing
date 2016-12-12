@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+//#include <string.h>
 #include "cal.h"
 
 int main(int argc, char * argv[])
 {
+
+	BIG_DECIMAL decimal1;
+	BIG_DECIMAL decimal2;
+	BIG_DECIMAL result,result2,result3,result4,result5;
 	char * command1=(char*)malloc(sizeof(char)*100);
 	char * command2=(char*)malloc(sizeof(char)*100);
 
@@ -16,8 +20,8 @@ int main(int argc, char * argv[])
 
 
 
-	BIG_DECIMAL decimal1=create_BIG_DECIMAL( (unsigned char *)command1, strlen(command1) );
-	BIG_DECIMAL decimal2=create_BIG_DECIMAL( (unsigned char *)command2, strlen(command2) );
+	decimal1=create_BIG_DECIMAL( (unsigned char *)command1, strlen(command1) );
+	decimal2=create_BIG_DECIMAL( (unsigned char *)command2, strlen(command2) );
 	//printf("%d\n",decimal.size);
 	printf("decimal1 : ");
 	printf_BIG_DECIMAL_struct(decimal1);
@@ -27,31 +31,31 @@ int main(int argc, char * argv[])
 	printf_BIG_DECIMAL_struct(decimal2);
 	printf("\n");
 
-	BIG_DECIMAL result=big_add(&decimal1,&decimal2);
+	result=big_add(&decimal1,&decimal2);
 
 	printf("A+B result : ");
 	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 
-	BIG_DECIMAL result2=big_min(&decimal1,&decimal2);
+	result2=big_min(&decimal1,&decimal2);
 
 	printf("A-B result : ");
 	printf_BIG_DECIMAL_struct(result2);	
 	printf("\n");
 
-	BIG_DECIMAL result3=big_mul(&decimal1,&decimal2);
+	result3=big_mul(&decimal1,&decimal2);
 
 	printf("A*B result : ");
 	printf_BIG_DECIMAL_struct(result3);	
 	printf("\n");
 
-	BIG_DECIMAL result4=big_div(&decimal1,&decimal2);
+	result4=big_div(&decimal1,&decimal2);
 
 	printf("A/B result : ");
 	printf_BIG_DECIMAL_struct(result4);	
 	printf("\n");
 
-	BIG_DECIMAL result5=big_mod(&decimal1,&decimal2);
+	result5=big_mod(&decimal1,&decimal2);
 
 	printf("A%%B result : ");
 	printf_BIG_DECIMAL_struct(result5);	
