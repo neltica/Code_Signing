@@ -203,6 +203,7 @@ BIG_DECIMAL big_mul(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	BIG_DECIMAL result;
 	result.size = A->size + B->size;
 	result.digit = (unsigned char*) malloc (result.size);
+	memset(result.digit,0,result.size);
 
 	max = (A->size > B->size) ? A->size : B->size;
 	min = (A->size > B->size) ? B->size : A->size;
