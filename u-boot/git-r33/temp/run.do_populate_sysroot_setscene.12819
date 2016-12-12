@@ -1,6 +1,0 @@
-
-def do_populate_sysroot_setscene(d):
-    sstate_setscene(d)
-
-
-do_populate_sysroot_setscene(d)

@@ -1,3 +1,0 @@
-DEBUG: Executing shell function do_install
-/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/temp/run.do_install.14526: 78: [: x P2020RDB-PC P2020RDB-PC_NAND P2020RDB-PC_SDCARD P2020RDB-PC_SPIFLASH P2020RDB-PC_36BIT P2020RDB-PC_36BIT_SPIFLASH P2020RDB-PC_36BIT_NAND P2020RDB-PC_36BIT_SDCARD: unexpected operator
-DEBUG: Shell function do_install finished

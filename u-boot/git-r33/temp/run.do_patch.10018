@@ -1,6 +1,0 @@
-
-def do_patch(d):
-    bb.build.exec_func('patch_do_patch', d)
-
-
-do_patch(d)

@@ -1,9 +1,0 @@
-
-def do_qa_staging(d):
-    bb.note("QA checking staging")
-
-    if not package_qa_check_staged(d.expand('/home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/work/p2020rdb-fsl_networking-linux-gnuspe/u-boot/git-r33/sysroot-destdir///home/sangmin/QorIQ-SDK-V1.4-20130625-yocto/build_p2020rdb_release/tmp/sysroots/p2020rdb/usr/lib'), d):
-        bb.fatal("QA staging was broken by the package built above")
-
-
-do_qa_staging(d)

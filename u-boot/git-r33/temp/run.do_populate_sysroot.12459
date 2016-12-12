@@ -1,8 +1,0 @@
-
-def do_populate_sysroot(d):
-    bb.build.exec_func("sysroot_stage_all", d)
-    for f in (d.getVar('SYSROOT_PREPROCESS_FUNCS', True) or '').split():
-        bb.build.exec_func(f, d)
-
-
-do_populate_sysroot(d)

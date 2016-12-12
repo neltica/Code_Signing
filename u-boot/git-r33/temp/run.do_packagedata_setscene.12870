@@ -1,6 +1,0 @@
-
-def do_packagedata_setscene(d):
-    sstate_setscene(d)
-
-
-do_packagedata_setscene(d)
