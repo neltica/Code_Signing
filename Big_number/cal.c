@@ -37,7 +37,7 @@ void printf_BIG_DECIMAL_struct(BIG_DECIMAL decimal)
 	printf(" %d",decimal.size);
 }
 
-int cmp_BIG_DECIMAL(BIG_DECIMAL *A,BIG_DECIMAL *B)
+int cmp_BIG_DECIMAL(BIG_DECIMAL *A,BIG_DECIMAL *B)    //A>B==1,  A<B==-1,  A=B==0
 {
 	int i;
 	if(A->size > B->size)
@@ -120,6 +120,58 @@ BIG_DECIMAL big_add(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	}
 	return result;
 }	
+
+BIG_DECIMAL big_add_digit(BIG_DECIMAL * A,unsigned char digit)
+{
+	int i;
+	int min,max;
+	int tmp;
+	BIG_DECIMAL result;
+	BIG_DECIMAL *bigger_num;
+
+	bigger_num = A;
+	max = A->size;
+	tmp=0;
+
+	result.digit=(unsigned char*)malloc(max+1);
+
+	result.digit[0]=A->digit[0]+digit;
+	if(result.digit[0]>0x09)
+	{
+		result.digit[0]=result.digit[0]%0x0A;
+		tmp=1;
+	}
+	else
+	{
+		result.size=max;
+		return result;
+	}
+	for(i=1;i<max;i++)
+	{
+		result.digit[i]=A->digit[i]+tmp;
+		if(result.digit[i]>0x09)
+		{
+			tmp=1;
+			result.digit[i]=result.digit[i]%0x0A;
+		}
+		else
+		{
+			result.size=max;
+			return result;
+		}
+	}
+	if(tmp)
+	{
+		result.digit[i]=tmp;
+		result.size=max+1;
+	}
+	else
+	{
+		result.size=1;
+	}
+
+	return result;
+}
 
 BIG_DECIMAL big_min(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
@@ -297,6 +349,7 @@ BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 		result.size--;
 	}
 
+	free(A_copy.digit);
 	return result;
 }
 
@@ -307,6 +360,16 @@ BIG_DECIMAL big_mod(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	BIG_DECIMAL result, tmp_result;
 	result.digit=(unsigned char *)malloc(A->size);
 	result.size=A->size;
+
+	if(A->size < B->size)
+	{
+		for(i=0;i<A->size;i++)
+		{
+			result.digit[i]=A->digit[i];
+		}
+		result.size=A->size;
+		return result;
+	}
 
 	for(i=0;i<A->size;i++)
 	{
@@ -342,4 +405,60 @@ BIG_DECIMAL big_mod(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	}
 
 	return result;
+}
+
+
+int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)
+{
+	BIG_DECIMAL divisor;
+	BIG_DECIMAL div_result;
+	BIG_DECIMAL result;
+	unsigned char * tmp_digit;
+	int i;
+
+	if(A->digit[0]==0x02 && A->size==1)
+	{
+		return 1;
+	}
+	else if(A->size==1 && A->digit[0]==0x01)
+	{
+		return 0;
+	}
+	else if( (A->digit[0]^0x01)&0x01)
+	{
+		return 0;
+	}
+
+	divisor=create_BIG_DECIMAL( (unsigned char*)"3",1 );
+
+	div_result=big_div(A,&divisor);
+
+	while(cmp_BIG_DECIMAL(&div_result,&divisor)==1)
+	{
+		result=big_mod(A,&divisor);
+
+		if(result.size==1 && result.digit[0]==0)
+		{
+			free(result.digit);
+			free(divisor.digit);
+			free(div_result.digit);
+			return 0;
+		}
+
+		free(result.digit);
+
+		tmp_digit=divisor.digit;
+		divisor=big_add_digit(&divisor,0x02);
+		free(tmp_digit);
+
+		tmp_digit=div_result.digit;
+		div_result=big_div(A,&divisor);
+		free(tmp_digit);
+
+	}
+
+	free(divisor.digit);
+	free(div_result.digit);
+
+	return 1;
 }

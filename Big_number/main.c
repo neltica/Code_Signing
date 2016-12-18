@@ -9,6 +9,8 @@ int main(int argc, char * argv[])
 	BIG_DECIMAL decimal1;
 	BIG_DECIMAL decimal2;
 	BIG_DECIMAL result,result2,result3,result4,result5;
+
+	int ret;
 	char * command1=(char*)malloc(sizeof(char)*100);
 	char * command2=(char*)malloc(sizeof(char)*100);
 
@@ -60,6 +62,28 @@ int main(int argc, char * argv[])
 	printf("A%%B result : ");
 	printf_BIG_DECIMAL_struct(result5);	
 	printf("\n");
+
+	ret=is_Prime_BIG_DECIMAL(&decimal1);
+	if(ret==1)
+	{
+		printf("A is Prime    ");
+	}
+	else
+	{
+		printf("A is not Prime    ");
+	}
+
+	ret=is_Prime_BIG_DECIMAL(&decimal2);
+	if(ret==1)
+	{
+		printf("B is Prime\n");
+	}
+	else
+	{
+		printf("B is not Prime\n");
+	}
+
+
 	return 0;
 }
 
