@@ -399,10 +399,10 @@ BIG_DECIMAL big_mod(BIG_DECIMAL *A, BIG_DECIMAL *B)
 			}
 		}
 		
-		while(!tmp_result.digit[tmp_result.size-1] && tmp_result.size>0)
+		/*while(!tmp_result.digit[tmp_result.size-1] && tmp_result.size>0)
 		{
 			tmp_result.size-=1;
-		}
+		}*/
 		result.size=i+tmp_result.size;
 		for(j=0;j<tmp_result.size;j++)
 		{
