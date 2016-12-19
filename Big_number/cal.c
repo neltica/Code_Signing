@@ -303,6 +303,13 @@ BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	BIG_DECIMAL result;
 	BIG_DECIMAL A_copy, tmp_result;
 
+	if(A->size < B->size)
+	{
+		result.digit=(unsigned char*)malloc(1);
+		result.digit[0]=0;
+		result.size=1;
+		return result;
+	}
 	result.digit=(unsigned char *)malloc(A->size-B->size+1);
 	result.size=A->size-B->size+1;
 
