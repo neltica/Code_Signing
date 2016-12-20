@@ -465,7 +465,7 @@ int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)  // not prime==0, prime==1
 		div_result=big_div(A,&divisor);
 		free(tmp_digit);
 
-	}
+}
 
 	free(divisor.digit);
 	free(div_result.digit);
@@ -480,6 +480,31 @@ BIG_DECIMAL make_Prime_BIG_DECIMAL(BIG_DECIMAL *A)
 	BIG_DECIMAL result;
 
 	result=*A;
+
+	for(;;)
+	{
+		if(is_Prime_BIG_DECIMAL(&result))
+		{
+			break;
+		}
+		else
+		{
+			result=big_add_digit(&result,0x01);
+		}
+	}
+
+	return result;
+}
+
+BIG_DECIMAL make_Prime_BIG_DECIMAL_digit(int digit)   //if digit=32, then search prime is bigger than 2^32.
+{
+	BIG_DECIMAL result;
+	int i;
+	result=create_BIG_DECIMAL((unsigned char*)"2",1);
+	for(i=0;i<digit;i++)
+	{
+		result=big_mul(&result,&result);
+	}
 
 	for(;;)
 	{

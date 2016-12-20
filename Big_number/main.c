@@ -92,6 +92,15 @@ int main(int argc, char * argv[])
 	printf_BIG_DECIMAL_struct(result);
 
 
+	printf("\nPrime bigger than 2^16:");
+	result=make_Prime_BIG_DECIMAL_digit(4);
+	printf_BIG_DECIMAL_struct(result);
+
+	printf("\nPrime bigger than 2^32:");
+	result=make_Prime_BIG_DECIMAL_digit(5);
+	printf_BIG_DECIMAL_struct(result);
+
+
 	return 0;
 }
 
