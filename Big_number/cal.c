@@ -134,7 +134,10 @@ BIG_DECIMAL big_add_digit(BIG_DECIMAL * A,unsigned char digit)
 	tmp=0;
 
 	result.digit=(unsigned char*)malloc(max+1);
-
+	for(i=0;i<A->size;i++)
+	{
+		result.digit[i]=A->digit[i];
+	}
 	result.digit[0]=A->digit[0]+digit;
 	if(result.digit[0]>0x09)
 	{
@@ -415,7 +418,7 @@ BIG_DECIMAL big_mod(BIG_DECIMAL *A, BIG_DECIMAL *B)
 }
 
 
-int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)
+int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)  // not prime==0, prime==1
 {
 	BIG_DECIMAL divisor;
 	BIG_DECIMAL div_result;
@@ -468,4 +471,27 @@ int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)
 	free(div_result.digit);
 
 	return 1;
+}
+
+
+
+BIG_DECIMAL make_Prime_BIG_DECIMAL(BIG_DECIMAL *A)
+{
+	BIG_DECIMAL result;
+
+	result=*A;
+
+	for(;;)
+	{
+		if(is_Prime_BIG_DECIMAL(&result))
+		{
+			break;
+		}
+		else
+		{
+			result=big_add_digit(&result,0x01);
+		}
+	}
+
+	return result;
 }

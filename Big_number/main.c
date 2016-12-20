@@ -39,28 +39,28 @@ int main(int argc, char * argv[])
 	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 
-	result2=big_min(&decimal1,&decimal2);
+	result=big_min(&decimal1,&decimal2);
 
 	printf("A-B result : ");
-	printf_BIG_DECIMAL_struct(result2);	
+	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 
-	result3=big_mul(&decimal1,&decimal2);
+	result=big_mul(&decimal1,&decimal2);
 
 	printf("A*B result : ");
-	printf_BIG_DECIMAL_struct(result3);	
+	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 
-	result4=big_div(&decimal1,&decimal2);
+	result=big_div(&decimal1,&decimal2);
 
 	printf("A/B result : ");
-	printf_BIG_DECIMAL_struct(result4);	
+	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 
-	result5=big_mod(&decimal1,&decimal2);
+	result=big_mod(&decimal1,&decimal2);
 
 	printf("A%%B result : ");
-	printf_BIG_DECIMAL_struct(result5);	
+	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 
 	ret=is_Prime_BIG_DECIMAL(&decimal1);
@@ -82,6 +82,14 @@ int main(int argc, char * argv[])
 	{
 		printf("B is not Prime\n");
 	}
+
+	printf("Prime bigger than decimal1:");
+	result=make_Prime_BIG_DECIMAL(&decimal1);
+	printf_BIG_DECIMAL_struct(result);
+
+	printf("\nPrime bigger than decimal2:");
+	result=make_Prime_BIG_DECIMAL(&decimal2);
+	printf_BIG_DECIMAL_struct(result);
 
 
 	return 0;
