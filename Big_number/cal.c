@@ -736,6 +736,46 @@ BIG_DECIMAL make_Prime_BIG_DECIMAL_digit(int digit)   //if digit=32, then search
 	return result;
 }
 
+BIG_DECIMAL factorize(BIG_DECIMAL *A)
+{
+	BIG_DECIMAL denominator,max,result;
+	unsigned char *ptrForFree;
+
+	if((A->digit[0]^0x01)&0x01)
+	{
+		return create_BIG_DECIMAL((unsigned char*)"2",1);
+	}
+
+	denominator=create_BIG_DECIMAL((unsigned char*)"3",1);
+
+	max=big_div(A,&denominator);
+
+	while(cmp_BIG_DECIMAL(&max,&denominator)==1)
+	{
+		result=big_mod(A,&denominator);
+		if(result.size==1 && result.digit[0]==0)
+		{
+			free(max.digit);
+			return denominator;
+		}
+
+		free(result.digit);
+
+		ptrForFree=denominator.digit;
+
+		denominator=big_add_digit(&denominator,0x02);
+		free(ptrForFree);
+
+		ptrForFree=max.digit;
+		max=big_div(A,&denominator);
+		free(ptrForFree);
+	}
+	free(denominator.digit);
+	free(max.digit);
+
+	denominator=big_mul_digit(A,1);
+}
+
 BIG_DECIMAL binary_To_decimal(BIG_BINARY *binary)
 {
 	int i,j;
