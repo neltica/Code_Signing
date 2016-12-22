@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 
 typedef struct BIG_DECIMAL
 {
@@ -33,6 +33,7 @@ int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A);
 BIG_DECIMAL big_add(BIG_DECIMAL *A,BIG_DECIMAL *B);
 BIG_DECIMAL big_add_digit(BIG_DECIMAL *A,unsigned char digit);
 BIG_DECIMAL big_min(BIG_DECIMAL *A,BIG_DECIMAL *B);
+BIG_DECIMAL big_min_digit(BIG_DECIMAL *A,unsigned char digit);
 BIG_DECIMAL big_mul(BIG_DECIMAL *A,BIG_DECIMAL *B);
 BIG_DECIMAL big_mul_digit(BIG_DECIMAL *A,unsigned char digit);
 BIG_DECIMAL big_mul_expo(BIG_DECIMAL *A,BIG_DECIMAL *B);

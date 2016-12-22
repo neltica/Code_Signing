@@ -342,6 +342,48 @@ BIG_DECIMAL big_min(BIG_DECIMAL *A, BIG_DECIMAL *B)
 
 }
 
+BIG_DECIMAL big_min_digit(BIG_DECIMAL *A,unsigned char digit)
+{
+	BIG_DECIMAL result;
+	int i;
+	unsigned char tmp=0x00;
+
+	result.digit=(unsigned char*)malloc(A->size);
+
+	if(A->digit[0]>=digit)
+	{
+		result.digit[0]=A->digit[0] - digit;
+	}
+	else
+	{
+		result.digit[0]=A->digit[0]+10-digit;
+		tmp=1;
+	}
+
+	for(i=1;i<A->size;i++)
+	{
+		if(A->digit[i]>=tmp)
+		{
+			result.digit[i]=A->digit[i]-tmp;
+			tmp=0;
+		}
+		else
+		{
+			result.digit[i]=A->digit[i]+10-tmp;
+			tmp=1;
+		}
+	}
+
+	result.size=A->size;
+
+	while(!result.digit[i-1] && i>1)
+	{
+		result.size--;
+		i--;
+	}
+	return result;
+}
+
 BIG_DECIMAL big_mul(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
 	int i,j;
