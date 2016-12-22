@@ -8,6 +8,7 @@ int main(int argc, char * argv[])
 
 	BIG_DECIMAL decimal1;
 	BIG_DECIMAL decimal2;
+	BIG_DECIMAL M;
 	BIG_DECIMAL result;
 	BIG_BINARY bResult;
 
@@ -127,6 +128,14 @@ int main(int argc, char * argv[])
 	result=big_mul_expo(&decimal1,&decimal2);
 
 	printf("A^B result : ");
+	printf_BIG_DECIMAL_struct(result);	
+	printf("\n");
+
+
+	M=create_BIG_DECIMAL((unsigned char*)"23456",5);
+	result=big_mod_expo(&decimal1,&decimal2,&M);
+
+	printf("A^B%%M result : ");
 	printf_BIG_DECIMAL_struct(result);	
 	printf("\n");
 

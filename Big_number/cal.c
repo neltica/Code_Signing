@@ -568,6 +568,70 @@ BIG_DECIMAL big_mod(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	return result;
 }
 
+BIG_DECIMAL big_mod_expo(BIG_DECIMAL *A,BIG_DECIMAL *E,BIG_DECIMAL *M)
+{
+	int i,j,position;
+	unsigned char flag,*ptrForFree;
+	BIG_DECIMAL result,tmp;
+
+	BIG_BINARY binaryE=decimal_To_binary(E);
+
+	result=create_BIG_DECIMAL((unsigned char*)"1",1);
+	tmp=big_mul_digit(A,0x01);
+
+	position= 8*(binaryE.size-1);
+	j=8;
+	flag=0x80;
+
+	for(i=0;i<8;i++)
+	{
+		if(binaryE.byte[binaryE.size-1]&flag)
+		{
+			position+=j;
+			break;
+		}
+
+		j--;
+		flag>>=1;
+	}
+
+	for(i=0;i<binaryE.size;i++)
+	{
+		flag=0x01;
+
+		for(j=0;j<8;j++)
+		{
+			if(binaryE.byte[i]&flag)
+			{
+				ptrForFree=result.digit;
+				result=big_mul(&result,&tmp);
+				free(ptrForFree);
+
+				ptrForFree=result.digit;
+				result=big_mod(&result,M);
+				free(ptrForFree);
+			}
+			position--;
+			if(position==0)
+			{
+				break;
+			}
+
+			ptrForFree=tmp.digit;
+			tmp=big_mul(&tmp,&tmp);
+			free(ptrForFree);
+
+			ptrForFree=tmp.digit;
+			tmp=big_mod(&tmp,M);
+			free(ptrForFree);
+
+			flag<<=1;
+		}
+	}
+
+	return result;
+}
+
 
 int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)  // not prime==0, prime==1
 {
