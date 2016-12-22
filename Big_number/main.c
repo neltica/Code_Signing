@@ -87,35 +87,48 @@ int main(int argc, char * argv[])
 	printf("Prime bigger than decimal1:");
 	result=make_Prime_BIG_DECIMAL(&decimal1);
 	printf_BIG_DECIMAL_struct(result);
+	printf("\n");
 
-	printf("\nPrime bigger than decimal2:");
+	printf("Prime bigger than decimal2:");
 	result=make_Prime_BIG_DECIMAL(&decimal2);
 	printf_BIG_DECIMAL_struct(result);
+	printf("\n");
 
-
-	printf("\nPrime bigger than 2^16:");
+	printf("Prime bigger than 2^16:");
 	result=make_Prime_BIG_DECIMAL_digit(4);
 	printf_BIG_DECIMAL_struct(result);
+	printf("\n");
 
-	printf("\nPrime bigger than 2^32:");
+	printf("Prime bigger than 2^32:");
 	result=make_Prime_BIG_DECIMAL_digit(5);
 	printf_BIG_DECIMAL_struct(result);
+	printf("\n");
 
-	printf("\ndecimal1 to binary1: ");
+	printf("decimal1 to binary1: ");
 	bResult=decimal_To_binary(&decimal1);
 	printf_BIG_BINARY_struct(bResult);
+	printf("\n");
 
-	printf("\nbianry1 to decimal1: ");
+	printf("bianry1 to decimal1: ");
 	result=binary_To_decimal(&bResult);
 	printf_BIG_DECIMAL_struct(result);
+	printf("\n");
 
-	printf("\ndecimal2 to binary2: ");
+	printf("decimal2 to binary2: ");
 	bResult=decimal_To_binary(&decimal2);
 	printf_BIG_BINARY_struct(bResult);
+	printf("\n");
 
-	printf("\nbianry2 to decimal2: ");
+	printf("bianry2 to decimal2: ");
 	result=binary_To_decimal(&bResult);
 	printf_BIG_DECIMAL_struct(result);
+	printf("\n");
+
+	result=big_mul_expo(&decimal1,&decimal2);
+
+	printf("A^B result : ");
+	printf_BIG_DECIMAL_struct(result);	
+	printf("\n");
 
 	return 0;
 }

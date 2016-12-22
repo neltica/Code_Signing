@@ -393,6 +393,62 @@ BIG_DECIMAL big_mul_digit(BIG_DECIMAL *A,unsigned char digit)
 	return result;
 }
 
+BIG_DECIMAL big_mul_expo(BIG_DECIMAL *A,BIG_DECIMAL *B)
+{
+	int i,j,position;
+	unsigned char flag,*ptrForFree;
+	BIG_DECIMAL result,tmp;
+
+	BIG_BINARY binaryB=decimal_To_binary(B);
+
+	result=create_BIG_DECIMAL((unsigned char*)"1",1);
+	tmp=big_mul_digit(A,1);
+
+	position=8*(binaryB.size-1);
+
+	j=8;
+	flag=0x80;
+
+	for(i=0;i<8;i++)
+	{
+		if(binaryB.byte[binaryB.size-1]&flag)
+		{
+			position+=j;
+			break;
+		}
+		j--;
+		flag>>=1;
+	}
+
+	for(i=0;i<binaryB.size;i++)
+	{
+		flag=0x01;
+
+		for(j=0;j<8;j++)
+		{
+			if(binaryB.byte[i]&flag)
+			{
+				ptrForFree=result.digit;
+				result=big_mul(&result,&tmp);
+				free(ptrForFree);
+			}
+
+			position--;
+			if(position==0)
+			{
+				break;
+			}
+
+			ptrForFree=tmp.digit;
+			tmp=big_mul(&tmp,&tmp);
+			free(ptrForFree);
+
+			flag<<=1;
+		}
+	}
+	return result;
+}
+
 BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
 	int i,j;
