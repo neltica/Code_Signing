@@ -216,7 +216,7 @@ BIG_DECIMAL big_add(BIG_DECIMAL *A, BIG_DECIMAL *B)
 BIG_DECIMAL big_add_digit(BIG_DECIMAL * A,unsigned char digit)
 {
 	int i;
-	int min,max;
+	int max;
 	int tmp;
 	BIG_DECIMAL result;
 	BIG_DECIMAL *bigger_num;
@@ -664,7 +664,7 @@ int is_Prime_BIG_DECIMAL(BIG_DECIMAL *A)  // not prime==0, prime==1
 	BIG_DECIMAL div_result;
 	BIG_DECIMAL result;
 	unsigned char * tmp_digit;
-	int i;
+	//int i;
 
 	if(A->digit[0]==0x02 && A->size==1)
 	{
