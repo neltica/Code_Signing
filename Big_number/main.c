@@ -135,8 +135,16 @@ int main(int argc, char * argv[])
 	M=create_BIG_DECIMAL((unsigned char*)"23456",5);
 	result=big_mod_expo(&decimal1,&decimal2,&M);
 
-	printf("A^B%%M result : ");
+	printf("M=23456 then A^B%%M result : ");
 	printf_BIG_DECIMAL_struct(result);	
+	printf("\n");
+
+	printf("decimal1 factorize:\n");
+	printf_Factorize(&decimal1);
+	printf("\n");
+
+	printf("decimal2 factorize:\n");
+	printf_Factorize(&decimal2);
 	printf("\n");
 
 	return 0;

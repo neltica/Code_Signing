@@ -102,6 +102,33 @@ void printf_BIG_BINARY_struct(BIG_BINARY binary)
 	printf(" %d",binary.size);
 }
 
+void printf_Factorize(BIG_DECIMAL *A)
+{
+	BIG_DECIMAL copy_A,result,one;
+	int i;
+	unsigned char *ptrForFree;
+
+	copy_A.digit=(unsigned char *)malloc(A->size);
+	for(i=0;i<A->size;i++)
+	{
+		copy_A.digit[i]=A->digit[i];
+	}
+	copy_A.size=A->size;
+
+	one=create_BIG_DECIMAL((unsigned char*)"1",1);
+	while(cmp_BIG_DECIMAL(&copy_A,&one)!=0)
+	{
+		result=factorize(&copy_A);
+		printf_BIG_DECIMAL_struct(result);
+		printf("\n");
+		ptrForFree=copy_A.digit;
+		copy_A=big_div(&copy_A,&result);
+		free(ptrForFree);
+		free(result.digit);
+	}
+	free(copy_A.digit);
+}
+
 int cmp_BIG_DECIMAL(BIG_DECIMAL *A,BIG_DECIMAL *B)    //A>B==1,  A<B==-1,  A=B==0
 {
 	int i;
@@ -452,7 +479,6 @@ BIG_DECIMAL big_mul_expo(BIG_DECIMAL *A,BIG_DECIMAL *B)
 BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
 	int i,j;
-	int ret;
 	int value;
 	BIG_DECIMAL result;
 	BIG_DECIMAL A_copy, tmp_result;
@@ -481,8 +507,7 @@ BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 		value=0;
 		while(1)
 		{
-			ret=cmp_BIG_DECIMAL(&tmp_result,B);
-			if(ret==0 || ret==1)
+			if(cmp_BIG_DECIMAL(&tmp_result,B)!=-1)
 			{
 				tmp_result=big_min(&tmp_result,B);
 				value++;
@@ -750,7 +775,7 @@ BIG_DECIMAL factorize(BIG_DECIMAL *A)
 
 	max=big_div(A,&denominator);
 
-	while(cmp_BIG_DECIMAL(&max,&denominator)==1)
+	while(cmp_BIG_DECIMAL(&max,&denominator)!=-1)
 	{
 		result=big_mod(A,&denominator);
 		if(result.size==1 && result.digit[0]==0)
@@ -774,6 +799,8 @@ BIG_DECIMAL factorize(BIG_DECIMAL *A)
 	free(max.digit);
 
 	denominator=big_mul_digit(A,1);
+
+	return denominator;
 }
 
 BIG_DECIMAL binary_To_decimal(BIG_BINARY *binary)
