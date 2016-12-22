@@ -15,6 +15,21 @@ BIG_DECIMAL create_BIG_DECIMAL(unsigned char *str, int size)
 	return result;
 }
 
+BIG_BINARY create_BIG_BINARY(unsigned char *str, int size)
+{
+	int i;
+	BIG_BINARY result;
+	result.size=size;
+
+	result.byte = (unsigned char*) malloc (size );
+
+	for(i=0 ; i<size ; i++)
+	{
+		result.byte[i] = str[size-1-i];
+	}
+	return result;
+}
+
 void printf_BIG_DECIMAL(BIG_DECIMAL decimal)
 {
 	int i;
@@ -35,6 +50,56 @@ void printf_BIG_DECIMAL_struct(BIG_DECIMAL decimal)
 		printf("%c",decimal.digit[i]+48);
 	}
 	printf(" %d",decimal.size);
+}
+
+void printf_BIG_BINARY(BIG_BINARY binary)
+{
+	int i,j;
+	unsigned char flag;
+
+	for(i=binary.size-1;i>=0;i--)
+	{
+		flag=0x80;
+
+		for(j=0;j<8;j++)
+		{
+			if(binary.byte[i]&flag)
+			{
+				printf("1");
+			}
+			else
+			{
+				printf("0");
+			}
+			flag>>=1;
+		}
+		printf(" ");
+	}
+}
+void printf_BIG_BINARY_struct(BIG_BINARY binary)
+{
+	int i,j;
+	unsigned char flag;
+
+	for(i=binary.size-1;i>=0;i--)
+	{
+		flag=0x80;
+
+		for(j=0;j<8;j++)
+		{
+			if(binary.byte[i]&flag)
+			{
+				printf("1");
+			}
+			else
+			{
+				printf("0");
+			}
+			flag>>=1;
+		}
+		printf(" ");
+	}
+	printf(" %d",binary.size);
 }
 
 int cmp_BIG_DECIMAL(BIG_DECIMAL *A,BIG_DECIMAL *B)    //A>B==1,  A<B==-1,  A=B==0
@@ -298,6 +363,36 @@ BIG_DECIMAL big_mul(BIG_DECIMAL *A, BIG_DECIMAL *B)
 	return result;
 }
 
+BIG_DECIMAL big_mul_digit(BIG_DECIMAL *A,unsigned char digit)
+{
+	int i;
+	BIG_DECIMAL result;
+	unsigned char tmp;
+	unsigned int size=A->size+1;
+
+	result.digit=(unsigned char *)malloc(size);
+	tmp=0;
+
+	for(i=0;i<A->size;i++)
+	{
+		result.digit[i]=(A->digit[i]*digit)+tmp;
+
+		tmp=result.digit[i]/0x0A;
+		result.digit[i]%=0x0A;
+	}
+
+	if(tmp)
+	{
+		result.digit[i]=tmp;
+		result.size=size;
+	}
+	else
+	{
+		result.size=A->size;
+	}
+	return result;
+}
+
 BIG_DECIMAL big_div(BIG_DECIMAL *A, BIG_DECIMAL *B)
 {
 	int i,j;
@@ -519,4 +614,90 @@ BIG_DECIMAL make_Prime_BIG_DECIMAL_digit(int digit)   //if digit=32, then search
 	}
 
 	return result;
+}
+
+BIG_DECIMAL binary_To_decimal(BIG_BINARY *binary)
+{
+	int i,j;
+	unsigned char flag,*ptrForFree;
+
+	BIG_DECIMAL decimal, tmp;
+
+	decimal=create_BIG_DECIMAL((unsigned char *)"0",1);
+	tmp=create_BIG_DECIMAL((unsigned char *)"1",1);
+
+	for(i=0;i<binary->size;i++)
+	{
+		flag=0x01;
+		for(j=0;j<8;j++)
+		{
+			if(binary->byte[i]&flag)
+			{
+				ptrForFree=decimal.digit;
+				decimal=big_add(&decimal,&tmp);
+				free(ptrForFree);
+			}
+
+			flag<<=1;
+
+			ptrForFree=tmp.digit;
+			tmp=big_mul_digit(&tmp,0x02);
+			free(ptrForFree);
+		}
+	}
+
+	return decimal;
+}
+
+BIG_BINARY decimal_To_binary(BIG_DECIMAL *decimal)
+{
+	int i,j,position;
+	BIG_BINARY binary;
+	BIG_DECIMAL numerator,denominator,remainder,zero;
+	void *ptrDigit;
+	unsigned char tmpMultiply;
+
+	binary.byte=(unsigned char*)malloc((int)(decimal->size/2)+1);
+	numerator.digit=(unsigned char*)malloc(decimal->size);
+	numerator.size=decimal->size;
+	for(i=0;i<numerator.size;i++)
+	{
+		numerator.digit[i]=decimal->digit[i];
+	}
+
+	zero=create_BIG_DECIMAL((unsigned char*)"0",1);
+	denominator=create_BIG_DECIMAL((unsigned char*)"256",3);
+
+	for(position=0;;position++)
+	{
+		remainder=big_mod(&numerator,&denominator);
+
+		ptrDigit=(void*)numerator.digit;
+		numerator=big_div(&numerator,&denominator);
+		free(ptrDigit);
+
+		binary.byte[position]=0x00;
+
+		for(i=0;i<remainder.size;i++)
+		{
+			tmpMultiply=1;
+			for(j=0;j<i;j++)
+			{
+				tmpMultiply*=10;
+			}
+			binary.byte[position]+=remainder.digit[i]*tmpMultiply;
+		}
+		if(cmp_BIG_DECIMAL(&numerator,&zero)==0)
+		{
+			break;
+		}
+	}
+
+	binary.size=position+1;
+	free(numerator.digit);
+	free(denominator.digit);
+	free(remainder.digit);
+	free(zero.digit);
+
+	return binary;
 }

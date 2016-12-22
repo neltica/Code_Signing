@@ -8,7 +8,8 @@ int main(int argc, char * argv[])
 
 	BIG_DECIMAL decimal1;
 	BIG_DECIMAL decimal2;
-	BIG_DECIMAL result,result2,result3,result4,result5;
+	BIG_DECIMAL result;
+	BIG_BINARY bResult;
 
 	int ret;
 	char * command1=(char*)malloc(sizeof(char)*100);
@@ -100,6 +101,21 @@ int main(int argc, char * argv[])
 	result=make_Prime_BIG_DECIMAL_digit(5);
 	printf_BIG_DECIMAL_struct(result);
 
+	printf("\ndecimal1 to binary1: ");
+	bResult=decimal_To_binary(&decimal1);
+	printf_BIG_BINARY_struct(bResult);
+
+	printf("\nbianry1 to decimal1: ");
+	result=binary_To_decimal(&bResult);
+	printf_BIG_DECIMAL_struct(result);
+
+	printf("\ndecimal2 to binary2: ");
+	bResult=decimal_To_binary(&decimal2);
+	printf_BIG_BINARY_struct(bResult);
+
+	printf("\nbianry2 to decimal2: ");
+	result=binary_To_decimal(&bResult);
+	printf_BIG_DECIMAL_struct(result);
 
 	return 0;
 }
